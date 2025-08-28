@@ -87,6 +87,8 @@ npm start
 ### Plugins
 Create custom plugins in the `plugins/` directory. Check existing plugins for examples.
 
+[![Join our WhatsApp](https://img.shields.io/badge/💬%20Join%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/KLd7DIw1OV56wj4BRw0oE9)
+
 **Arigato**
 
 ---
