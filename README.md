@@ -42,7 +42,7 @@ pm2 stop garfield
 | `SUDO` | Admin nums | - | ❌ |
 | `OWNER_NUMBER` | Owner nums | - | ❌ |
 | `WORKTYPE` | (`private`/`public`) | `private` | ❌ |
-| `THEME` | Bot appearance theme | `Garfield` | ❌ |
+| `THEME` | appearance theme | `Garfield` | ❌ |
 
 ## Available Themes
 
