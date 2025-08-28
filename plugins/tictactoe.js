@@ -18,21 +18,43 @@ Module({
 })(async (message, match) => {
   if (!message.isGroup) return;
   const roomName = match?.trim();
-  if (games.has(message.from)) 
-  return await message.send('_A game is already running_');
+  if (games.has(message.from)) return await message.send('_A game is already running_');
+  const mention = message.raw.message?.extendedTextMessage?.contextInfo?.mentionedJid?.[0];
+  const reply = message.quoted?.sender;
+  const opponent = mention || reply || null;
   const game = new TicTacToe(message.sender, 'o'); 
   const session = {
     starter: message.sender,
-    opponent: null,
+    opponent,
     game,
-    state: 'WAITING',
+    state: opponent ? 'PLAYING' : 'WAITING',
     roomName,
     chatId: message.from,
     id: 'ttt-' + Date.now()
   };
 
+  if (opponent) session.game.p2 = opponent;
   games.set(message.from, session);
-  await message.send(`⏳ *Waiting for opponent*\n▢ Room ID: ${session.id}\nType *.ttt ${roomName || ''}* to join`);
+  if (opponent) {
+    await message.send({
+      text: `
+🎮 *TicTacToe*
+
+Turn ${session.game.activePlayer}...
+
+${srt_r(session.game.displayBoard())}
+
+▢ Room ID: ${session.id}
+▢ Player ❎: ${session.game.p1}
+▢ Player ⭕: ${session.game.p2}
+• Use num (1-9)
+• *surrender* to give up
+`,
+      mentions: [session.game.p1, session.game.p2]
+    });
+  } else {
+    await message.send(`⏳ *Waiting for opponent*\n▢ Room ID: ${session.id}\nType *.ttt ${roomName || ''}* to join`);
+  }
 });
 
 Module({
@@ -57,14 +79,15 @@ ${srt_r(session.game.displayBoard())}
 ▢ Player ❎: ${session.game.p1}
 ▢ Player ⭕: ${session.game.p2}
 • Use num (1-9)
-•*surrender* to give up
+• *surrender* to give up
 `);
     return;
   }
+
   if (![session.game.p1, session.game.p2].includes(s_id)) return;
   if (/^(surrender|give up)$/i.test(body)) {
     const winner = s_id === session.game.p1 ? session.game.p2 : session.game.p1;
-    await message.send(`🏳️ ${s_id} surrendered! ${winner} wins\n▢ Room ID: ${session.id}`);
+    await message.send(`🏳️ ${s_id} surrendered ${winner} wins\n▢ Room ID: ${session.id}`);
     games.delete(message.from);
     return;
   }
@@ -73,7 +96,7 @@ ${srt_r(session.game.displayBoard())}
   if (!/^[1-9]$/.test(body)) return;
   const pos = parseInt(body) - 1;
   const ok = session.game.play(pos);
-  if (!ok) return message.send('Position is already taken');
+  if (!ok) return message.send('_Position is already taken_');
   const winner = session.game.victor;
   const tie = session.game.totalMoves === 9;
   let status;
@@ -91,7 +114,7 @@ ${srt_r(session.game.displayBoard())}
 ▢ Room ID: ${session.id}
 ▢ Player ❎: ${session.game.p1}
 ▢ Player ⭕: ${session.game.p2}
-${!winner && !tie ? '• Use number (1-9)\n•*surrender* to give up' : ''}
+${!winner && !tie ? '• Use number (1-9)\n• *surrender* to give up' : ''}
 `);
 
   if (winner || tie) games.delete(message.from);
