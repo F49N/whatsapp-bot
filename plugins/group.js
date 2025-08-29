@@ -1,6 +1,6 @@
 const { Module } = require('../lib/plugins');
 const config = require('../config');
-const { GroupWarns } = require('../lib/database/');
+//const { GroupWarns } = require('../lib/database/');
 
 Module({
     command: 'add',
@@ -148,7 +148,7 @@ Module({
     await message.send(`Rejected: ${requests.length} users`);
 });
 
-Module({
+/*Module({
     command: 'warn',
     package: 'group',
     description: 'Warn a user in the group'
@@ -195,4 +195,4 @@ Module({
     .replace('&mention', `${x_id.split('@')[0]}`)
     .replace('&remaining', 3) 
     );
-});
+});*/
