@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="60" viewBox="0 0 240 60">
+  <defs>
+    <linearGradient id="darkPanel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f2027; stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c5364; stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+
+  <rect rx="8" width="240" height="60" fill="url(#darkPanel)" stroke="#1a1a1a" stroke-width="2"/>
+
+  <line x1="8" y1="8" x2="38" y2="8" stroke="#00d9ff" stroke-width="3" stroke-linecap="round"/>
+  <line x1="8" y1="8" x2="8" y2="38" stroke="#00d9ff" stroke-width="3" stroke-linecap="round"/>
+  
+  <line x1="232" y1="8" x2="202" y2="8" stroke="#00d9ff" stroke-width="3" stroke-linecap="round"/>
+  <line x1="232" y1="8" x2="232" y2="38" stroke="#00d9ff" stroke-width="3" stroke-linecap="round"/>
+  
+  <line x1="8" y1="52" x2="38" y2="52" stroke="#00d9ff" stroke-width="3" stroke-linecap="round"/>
+  <line x1="8" y1="52" x2="8" y2="22" stroke="#00d9ff" stroke-width="3" stroke-linecap="round"/>
+
+  <line x1="232" y1="52" x2="202" y2="52" stroke="#00d9ff" stroke-width="3" stroke-linecap="round"/>
+  <line x1="232" y1="52" x2="232" y2="22" stroke="#00d9ff" stroke-width="3" stroke-linecap="round"/>
+
+  
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Segoe UI, sans-serif" font-size="20" font-weight="600" fill="#ffffff">
+    Panel
+  </text>
+</svg>
