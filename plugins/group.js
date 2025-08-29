@@ -168,7 +168,7 @@ Module({
     .replace('&mention', `${y_id.split('@')[0]}`)
     .replace('&warn', ctx.warns)
     .replace('&remaining', remaining));
-    if (ctx.warns >=> time) {
+    if (ctx.warns >= time) {
     try { await message.removeParticipant(y_id);
     await message.send(config.WARN_KICK_MESSAGE.replace('&mention', `${y_id.split('@')[0]}`));
     await ctx.destroy();
