@@ -5,7 +5,20 @@
       <stop offset="100%" style="stop-color:#928DAB; stop-opacity:1" />
     </linearGradient>
   </defs>
+
+
   <rect rx="10" width="220" height="50" fill="url(#coolGradient)" stroke="#000" stroke-width="1"/>
+  <line x1="8" y1="4" x2="28" y2="4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="4" y1="8" x2="4" y2="28" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="192" y1="4" x2="212" y2="4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="216" y1="8" x2="216" y2="28" stroke="white" stroke-width="2" stroke-linecap="round"/>
+
+  <line x1="4" y1="22" x2="4" y2="42" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="8" y1="46" x2="28" y2="46" stroke="white" stroke-width="2" stroke-linecap="round"/>
+
+  <line x1="192" y1="46" x2="212" y2="46" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="216" y1="22" x2="216" y2="42" stroke="white" stroke-width="2" stroke-linecap="round"/>
+
   <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
         font-family="Segoe UI, sans-serif" font-size="18" font-weight="600" fill="#ffffff">
     Render
