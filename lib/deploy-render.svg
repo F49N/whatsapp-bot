@@ -1,26 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="220" height="50" viewBox="0 0 220 50">
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="50" viewBox="0 0 160 50">
   <defs>
     <linearGradient id="coolGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1f1c2c; stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#928DAB; stop-opacity:1" />
+      <stop offset="0%" stop-color="#1f1c2c"/>
+      <stop offset="100%" stop-color="#928DAB"/>
     </linearGradient>
   </defs>
 
+  <rect rx="10" width="160" height="50" fill="url(#coolGradient)" stroke="#000" stroke-width="1"/>
 
-  <rect rx="10" width="220" height="50" fill="url(#coolGradient)" stroke="#000" stroke-width="1"/>
-  <line x1="8" y1="4" x2="28" y2="4" stroke="white" stroke-width="2" stroke-linecap="round"/>
-  <line x1="4" y1="8" x2="4" y2="28" stroke="white" stroke-width="2" stroke-linecap="round"/>
-  <line x1="192" y1="4" x2="212" y2="4" stroke="white" stroke-width="2" stroke-linecap="round"/>
-  <line x1="216" y1="8" x2="216" y2="28" stroke="white" stroke-width="2" stroke-linecap="round"/>
-
-  <line x1="4" y1="22" x2="4" y2="42" stroke="white" stroke-width="2" stroke-linecap="round"/>
-  <line x1="8" y1="46" x2="28" y2="46" stroke="white" stroke-width="2" stroke-linecap="round"/>
-
-  <line x1="192" y1="46" x2="212" y2="46" stroke="white" stroke-width="2" stroke-linecap="round"/>
-  <line x1="216" y1="22" x2="216" y2="42" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <g stroke="white" stroke-width="2" stroke-linecap="round">
+    <line x1="6" y1="4" x2="22" y2="4"/>
+    <line x1="4" y1="8" x2="4" y2="28"/>
+    <line x1="138" y1="4" x2="154" y2="4"/>
+    <line x1="156" y1="8" x2="156" y2="28"/>
+    <line x1="4" y1="22" x2="4" y2="42"/>
+    <line x1="6" y1="46" x2="22" y2="46"/>
+    <line x1="138" y1="46" x2="154" y2="46"/>
+    <line x1="156" y1="22" x2="156" y2="42"/>
+  </g>
 
   <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-        font-family="Segoe UI, sans-serif" font-size="18" font-weight="600" fill="#ffffff">
+        font-family="Segoe UI, sans-serif" font-size="18" font-weight="600" fill="#fff">
     Render
   </text>
 </svg>
