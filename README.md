@@ -63,11 +63,11 @@ pm2 stop garfield
 3. Click the Run button to start your bot
 
 
-# Render
+### Render
 
 [![Render](./lib/deploy-render.svg)](https://render.com/deploy?repo=https://github.com/naxordeve/whatsapp-bot)
 
-# Panel
+### Panel
 
 [![Panel](./lib/deploy-panel.svg)]( https://control.katabump.com/)
 
