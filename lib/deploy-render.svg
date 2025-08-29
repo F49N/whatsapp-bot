@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="220" height="50" viewBox="0 0 220 50">
   <defs>
-    <linearGradient id="garfieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFB347; stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#FF8000; stop-opacity:1" />
+    <linearGradient id="coolGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f1c2c; stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#928DAB; stop-opacity:1" />
     </linearGradient>
   </defs>
-  <rect rx="12" width="220" height="50" fill="url(#garfieldGradient)" stroke="#CC6600" stroke-width="2"/>
+  <rect rx="10" width="220" height="50" fill="url(#coolGradient)" stroke="#000" stroke-width="1"/>
   <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-        font-family="Arial Black, sans-serif" font-size="18" fill="#fff">
-    Deploy to Render
+        font-family="Segoe UI, sans-serif" font-size="18" font-weight="600" fill="#ffffff">
+    Render
   </text>
 </svg>
