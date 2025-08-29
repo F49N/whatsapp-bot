@@ -62,6 +62,9 @@ pm2 stop garfield
 2. Add environment variables in the Secrets tab
 3. Click the Run button to start your bot
 
+
+[![Render](./lib/deploy-render.svg)](https://render.com/deploy?repo=https://github.com/naxordeve/whatsapp-bot)
+
 ## Monitoring
 
 ### UptimeBot
