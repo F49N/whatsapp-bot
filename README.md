@@ -65,6 +65,10 @@ pm2 stop garfield
 
 [![Render](./lib/deploy-render.svg)](https://render.com/deploy?repo=https://github.com/naxordeve/whatsapp-bot)
 
+# Panel
+
+[![Panel](./lib/deploy-panel.svg)]( https://control.katabump.com/)
+
 ## Monitoring
 
 ### UptimeBot
