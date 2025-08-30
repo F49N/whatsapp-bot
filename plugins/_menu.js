@@ -100,12 +100,12 @@ Module({
   const minutes = Math.floor((uptime % 3600) / 60);
   const seconds = Math.floor(uptime % 60);
   const ctx = `
-${theme.botName}* is online
+*${theme.botName}* is online
 
-Time: ${time}
-Host: ${hostname}
-RAM Usage: ${ramUsedMB} MB
-Uptime: ${hours}h ${minutes}m ${seconds}s
+*Time:* ${time}
+*Host:* ${hostname}
+*RAM Usage:* ${ramUsedMB} MB
+*Uptime:* ${hours}h ${minutes}m ${seconds}s
 `;
   if (theme.image) {
     await message.send({ image: { url: theme.image }, caption: ctx });
