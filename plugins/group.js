@@ -1,6 +1,5 @@
 const { Module } = require('../lib/plugins');
 const config = require('../config');
-//const { GroupWarns } = require('../lib/database/');
 
 Module({
     command: 'add',
@@ -148,51 +147,41 @@ Module({
     await message.send(`Rejected: ${requests.length} users`);
 });
 
-/*Module({
+const Warn = require('../lib/database/warn');
+Module({
     command: 'warn',
     package: 'group',
     description: 'Warn a user in the group'
 })(async (message) => {
     await message.loadGroupInfo(message.from);
-    if (!message.isGroup || !message.isAdmin || !message.isBotAdmin) return;
-    const mentionedJid = message.content?.contextInfo?.mentionedJid?.[0] || message.quoted?.sender; 
-    if (!mentionedJid) return message.send('_Please mention a user or reply to them_');
-    const g_id = message.from;
-    const y_id = mentionedJid;
-    let [ctx] = await GroupWarns.findOrCreate({where: { group: g_id, user: y_id },defaults: { warns: 0 },});
-    ctx.warns += 1;
-    await ctx.save();
-    const time = 3;
-    const remaining = time - ctx.warns;
-    await message.send(config.WARN_MESSAGE
-    .replace('&mention', `${y_id.split('@')[0]}`)
-    .replace('&warn', ctx.warns)
-    .replace('&remaining', remaining));
-    if (ctx.warns >= time) {
-    try { await message.removeParticipant(y_id);
-    await message.send(config.WARN_KICK_MESSAGE.replace('&mention', `${y_id.split('@')[0]}`));
-    await ctx.destroy();
-    } catch (e) { console.error(e);
-      }
-    }
+    if (!message.isGroup) return;
+    if (!messagw.isAdmin && !message.fromMe) return;
+    if (!messagw.isBotAdmin) return;
+    const x = message.quoted?.sender || message.mentions[0];
+    if (!x) return msg.send('_Tag or reply to a user_');
+    const reason = message.text || '_no reason_';
+    const ctx = await Warn.find({ id: message.from, userid: x });
+    if (ctx.length >= 3) {
+    await msg.kickUser(x);
+    await Warn.deleteMany({ id: message.from, userid: x });
+    return message.send(`@${x.split('@')[0]} has been removed`, { mentions: [x] }); }
+    await new Warn({id: message.from,userid: x,reason: reason,warnedBy: message.sender
+    }).save();
+    return message.send(`「 *warning* 」\n\n@${x.split('@')[0]}: ${ctx.length + 1}/3\n\n*Reason*: ${reason}`, { mentions: [x] });
 });
 
 Module({
-    command: 'resetwarn',
+    command: 'resetwarns',
     package: 'group',
-    description: 'Reset warnings of a user in the group'
+    description: 'Reset warnings of a user'
 })(async (message) => {
     await message.loadGroupInfo(message.from);
-    if (!message.isGroup || !message.isAdmin || !message.isBotAdmin) return;
-    const mentionedJid = message.content?.contextInfo?.mentionedJid?.[0] || message.quoted?.sender; 
-    if (!mentionedJid) return message.send('_Please mention a user or reply to them_');
-    const g_id = message.from;
-    const x_id = mentionedJid;
-    const ctz = await GroupWarns.findOne({ where: { group: g_id, user: x_id } });
-    if (!ctz) return message.send('_This user has no warnings_');
-    await ctz.destroy();
-    await message.send(config.WARN_RESET_MESSAGE
-    .replace('&mention', `${x_id.split('@')[0]}`)
-    .replace('&remaining', 3) 
-    );
-});*/
+    if (! message.isGroup) return;
+    if (! message.isAdmin) return;
+    if (! message.isBotAdmin) return;
+    const x = message.quoted?.sender || message.mentions[0];
+    if (!x) return messagw.send('_Tag or reply to a user_');
+    await Warn.deleteMany({ id: messagw.from, userid: x });
+    return message.send(`*Warning reset for:* @${x.split('@')[0]}`, { mentions: [x] });
+});
+        
