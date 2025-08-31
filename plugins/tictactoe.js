@@ -51,9 +51,9 @@ ${srt_r(session.game.displayBoard())}
 `;
 
   if (session.is_ai) {
-  await message.send(dis;
+  await message.send(dis);
   } else {
-  await message.send({text: dis,mentions: [session.game.p1, session.game.p2]
+  await message.send({text: dis, mentions: [session.game.p1, session.game.p2]
   });
   }
 });
@@ -115,7 +115,7 @@ Module({
   } else if (tie) {
     status = '🤝 Game ended in a draw';
   } else {
-    if (session.isAuto) {
+    if (session.is_ai) {
     status = session.game.activePlayer === session.game.p1 ? `🎲 Turn: ${session.game.activePlayer.split('@')[0]}` : '🎲 Turn: Bot';
     } else {
     status = `🎲 Turn: ${session.game.activePlayer.split('@')[0]}`;
