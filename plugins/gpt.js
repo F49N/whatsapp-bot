@@ -4,21 +4,18 @@ const fetch = require("node-fetch")
 Module({
   command: "gpt",
   package: "ai",
-  description: "Chat with ChatGPT 3.5"
+  description: "Chat with ChatGPT"
 })(async (message, match) => {
-  if (!match) return message.send("Please provide a question")
-  let res = await fetch("https://garfield-apis.onrender.com/ai/chatgpt_3.5_scr1", {
+  if (!match) return message.send("_Please provide a question_")
+  const sent = await message.send("🤔 Thinking...")
+  const res = await fetch("https://api.naxordeve.qzz.io/ai/openai", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      messages: [
-        { role: "user", content: match }
-      ]
-    })
+    body: JSON.stringify({ question: match })
   })
-  
-  let data = await res.json()
-  await message.send(data.answer)
+  const data = await res.json()
+  const answer = data.answer
+  await message.send(answer, { edit: sent.key })
 })
 
 Module({
@@ -41,5 +38,5 @@ Module({
   })
 
   let j = await r.json()
-  await message.send(j?.answer || "Ugh... too much work.")
+  await message.send(j?.answer || "Ugh... too much work")
 })
