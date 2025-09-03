@@ -1,3 +1,4 @@
+const {Module} = require('../lib/plugins');
 const StickerBuilder = require('../lib/sticker');
 
 Module({
