@@ -1,115 +1,91 @@
 const os = require('os');
 const { Module, commands } = require('../lib/plugins');
-const { getTheme } = require('../Themes/themes');
 const config = require('../config');
 const TextStyles = require('../lib/textfonts');
 const styles = new TextStyles();
-const theme = getTheme();
-const star = '⛥';
 
 Module({
   command: 'menu',
   package: 'general',
-  description: 'Show all commands or a specific package',
+  description: 'Show all commands or a specific package'
 })(async (message, match) => {
   const hostname = os.hostname();
-  const time = new Date().toLocaleTimeString('en-ZA', { timeZone: 'Africa/Johannesburg' });
-  const mode = config.WORK_TYPE || process.env.WORK_TYPE;
-  const ramUsedMB = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+  const time = new Date().toLocaleTimeString('en-ZA', {
+    timeZone: 'Africa/Johannesburg'
+  });
 
-  const grouped = commands
-    .filter(cmd => cmd.command && cmd.command !== 'undefined')
-    .reduce((acc, cmd) => {
-      if (!acc[cmd.package]) acc[cmd.package] = [];
-      acc[cmd.package].push(cmd.command);
-      return acc;
+  const mode = config.WORK_TYPE || process.env.WORK_TYPE || 'unknown';
+  const ram = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+  const req_package = match?.trim().toLowerCase();
+
+  const groupedCommands = commands
+    .filter(command => command.command)
+    .reduce((groups, command) => {
+      const pack_name = command.package || 'general';
+
+      if (!groups[pack_name]) {
+        groups[pack_name] = [];
+      }
+
+      groups[pack_name].push(command.command);
+
+      return groups;
     }, {});
 
-  const categories = Object.keys(grouped).sort();
-  let _cmd_st = '';
+  const packages = Object.keys(groupedCommands).sort();p
+  if (req_package) {
+    const pack_name = packages.find(
+      name => name.toLowerCase() === req_package
+    );
 
-  if (match && grouped[match.toLowerCase()]) {
-    const pack = match.toLowerCase();
-    _cmd_st += `╭───╼「 *${styles.toMonospace(pack.toUpperCase())}* 」\n`;
-    grouped[pack]
-      .sort((a, b) => a.localeCompare(b))
-      .forEach(cmdName => {
-        _cmd_st += `┃ ${styles.toMonospace(cmdName)}\n`;
-      });
-    _cmd_st += `╰──────────╼\n`;
-  } else {
-    _cmd_st += `╭──╼「 *${styles.toMonospace(theme.botName)}* 」\n`;
-    _cmd_st += `┃ ${styles.toMonospace(star)} Host: ${styles.toMonospace(hostname)}\n`;
-    _cmd_st += `┃ ${styles.toMonospace(star)} User: ${styles.toMonospace(message.pushName)}\n`;
-    _cmd_st += `┃ ${styles.toMonospace(star)} Prefix: ${config.prefix}\n`;
-    _cmd_st += `┃ ${styles.toMonospace(star)} Time: ${styles.toMonospace(time)}\n`;
-    _cmd_st += `┃ ${styles.toMonospace(star)} Mode: ${styles.toMonospace(mode)}\n`;
-    _cmd_st += `┃ ${styles.toMonospace(star)} Ram: ${ramUsedMB} MB\n`;
-    _cmd_st += `╰──────────╼\n\n`;
+    if (pack_name) {
+      const command_list = [...new Set(groupedCommands[pack_name])]
+        .sort((a, b) => a.localeCompare(b));
 
-    if (match && !grouped[match.toLowerCase()]) {
-      _cmd_st += `_not found: ${match}_\n\n`;
-      _cmd_st += `packages:\n`;
-      categories.forEach(cat => {
-        _cmd_st += `- ${cat}\n`;
-      });
-    } else {
-      for (const cat of categories) {
-        _cmd_st += `╭───╼「 *${styles.toMonospace(cat.toUpperCase())}* 」\n`;
-        grouped[cat]
-          .sort((a, b) => a.localeCompare(b))
-          .forEach(cmdName => {
-            _cmd_st += `┃ ${styles.toMonospace(cmdName)}\n`;
-          });
-        _cmd_st += `╰──────────╼\n`;
+      let menu = `╭───╼「 *${styles.toMonospace(pack_name.toUpperCase())}* 」\n`;
+
+      for (const command of command_list) {
+        menu += `┃ ${styles.toMonospace(command)}\n`;
       }
+
+      menu += '╰──────────╼';
+
+      return message.reply(menu);
     }
   }
 
-  _cmd_st += `\n${theme.other?.footer}`;
-  if (theme.image) {
-    await message.send(
-      { image: { url: theme.image }, caption: _cmd_st },
-      { quoted: message }
-    );
+  let menu = '╭──╼「 *MENU* 」\n';
+  menu += `┃ ⛥ Host: ${styles.toMonospace(hostname)}\n`;
+  menu += `┃ ⛥ User: ${styles.toMonospace(message.pushName || 'unknown')}\n`;
+  menu += `┃ ⛥ Prefix: ${styles.toMonospace(config.prefix || '.')}\n`;
+  menu += `┃ ⛥ Time: ${styles.toMonospace(time)}\n`;
+  menu += `┃ ⛥ Mode: ${styles.toMonospace(mode)}\n`;
+  menu += `┃ ⛥ RAM: ${styles.toMonospace(`${ram} MB`)}\n`;
+  menu += '╰──────────╼\n\n';
+
+  if (req_package) {
+    menu += `_Package not found: ${req_package}_\n\n`;
+    menu += '*Available Packages:*\n';
+
+    for (const pack_name of packages) {
+      menu += `┃ ${styles.toMonospace(pack_name)}\n`;
+    }
+
+    return message.reply(menu);
   }
-});
 
-Module({
-  command: 'list',
-  package: 'general',
-  description: 'List all available commands',
-})(async (message) => {
-  const aca = commands
-    .filter(cmd => cmd.command && cmd.command !== 'undefined')
-    .map(cmd => cmd.command)
-    .join('\n');
-  await message.send(`*List:*\n${aca}`);
-});
+  for (const pack_name of packages) {
+    const command_list = [...new Set(groupedCommands[pack_name])]
+      .sort((a, b) => a.localeCompare(b));
 
-Module({
-  command: 'alive',
-  package: 'general',
-  description: 'Check if bot is alive',
-})(async (message) => {
-  const hostname = os.hostname();
-  const time = new Date().toLocaleTimeString('en-ZA', { timeZone: 'Africa/Johannesburg' });
-  const ramUsedMB = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
-  const uptime = process.uptime();
-  const hours = Math.floor(uptime / 3600);
-  const minutes = Math.floor((uptime % 3600) / 60);
-  const seconds = Math.floor(uptime % 60);
-  const ctx = `
-*${theme.botName}* is online
+    menu += `╭───╼「 *${styles.toMonospace(pack_name.toUpperCase())}* 」\n`;
 
-*Time:* ${time}
-*Host:* ${hostname}
-*RAM Usage:* ${ramUsedMB} MB
-*Uptime:* ${hours}h ${minutes}m ${seconds}s
-`;
-  if (theme.image) {
-    await message.send({ image: { url: theme.image }, caption: ctx });
-  } else {
-    await message.send(ctx);
+    for (const command of command_list) {
+      menu += `┃ ${styles.toMonospace(command)}\n`;
+    }
+
+    menu += '╰──────────╼\n\n';
   }
+
+  return message.reply(menu.trim());
 });
